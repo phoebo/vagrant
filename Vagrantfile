@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
     # Base setup: Ubuntu Server 14.04 LTS (Trusty Tahr) 64-bit
     config.vm.box = "ubuntu/trusty64"
 
-    # VM will have 1.5 GB RAM as default
+    # VM will have 512 MB RAM as default
     _.memory = 512
 
     # Puppet with passed provider to facter
@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
     # Base setup:  Ubuntu Server 14.04 LTS (Trusty Tahr) 64-bit for Parallels
     override.vm.box = "parallels/ubuntu-14.04"
 
-    # VM will have 1.5 GB RAM as default
+    # VM will have 512 MB RAM as default
     _.memory = 512
 
     # Puppet with passed provider to facter
