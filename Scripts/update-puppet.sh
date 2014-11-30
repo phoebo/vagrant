@@ -8,8 +8,8 @@ LIBRARIAN_DIR="/tmp/librarian-puppet"
 #
 # Note: we need also git-core so that librarian can checkout GIT repositories.
 if [ ! -e /var/puppet-updated ]; then
-	apt-get update
-	apt-get --assume-yes install puppet librarian-puppet git-core
+	apt-get update || exit 1
+	apt-get --assume-yes install puppet git-core librarian-puppet || exit 1
 
 	touch /var/puppet-updated
 fi
