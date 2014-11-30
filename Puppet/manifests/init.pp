@@ -9,3 +9,7 @@ class { 'bootstrap': }
 
 # ------------------------------------------------------------------------------
 # Add your setup here
+
+notify { 'my_message':
+  message => hiera('my_message'),
+}

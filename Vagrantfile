@@ -8,6 +8,7 @@ def puppet(config, provider)
     pp.module_path = "Puppet/modules"
     pp.manifests_path = "Puppet/manifests"
     pp.manifest_file  = "init.pp"
+    pp.hiera_config_path = "Hiera.yaml"
 
     pp.options = [
       "--templatedir",
