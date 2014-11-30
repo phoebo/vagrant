@@ -7,18 +7,5 @@
 
 class { 'bootstrap': }
 
-# Some system essentials
-package {
-	[
-		'git-core',
-		'curl'
-	]:
-	ensure => 'installed'
-}
-
-if defined( "vcsrepo") {
-	Package['git-core'] -> Vcsrepo <| |>
-}
-
 # ------------------------------------------------------------------------------
 # Add your setup here
