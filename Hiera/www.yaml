@@ -6,4 +6,4 @@
   - "common"
 
 :yaml:
-  :datadir: '/vagrant/Hiera'
+  :datadir: '/vagrant/Hiera/www'

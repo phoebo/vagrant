@@ -2,7 +2,7 @@
 forge 'http://forge.puppetlabs.com'
 
 mod 'puppetlabs/stdlib'
-#mod 'puppetlabs/vcsrepo'
+mod 'puppetlabs/postgresql'
 
 mod 'bootstrap',
 	:git  => 'https://gitlab.v3net.cz/puppet/bootstrap.git'

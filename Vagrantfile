@@ -33,45 +33,43 @@ Vagrant.configure("2") do |config|
   # Uncomment for off-line use
   config.vm.box_check_update = false
 
-  # Host FQDN (.local suffix required)
-  config.vm.hostname = "vagrant.local"
+  # Hostmanager
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.ignore_private_ip = true
 
-  # Host IP address
-  config.vm.network :private_network, ip: "10.99.99.20"
-
-  # Upgrade to newest Puppet on fresh install
-  config.vm.provision :shell, :path => "Scripts/update-puppet.sh"
-
-  # ----------------------------------------------------------------------------
-
-  # Configuration for VirtualBox (Windows)
-  config.vm.provider :virtualbox do |_, override|
-
-    # Base setup: Ubuntu Server 14.04 LTS (Trusty Tahr) 64-bit
-    config.vm.box = "ubuntu/trusty64"
-
-    # VM will have 512 MB RAM as default
-    _.memory = 512
-
-    # Puppet with passed provider to facter
-    puppet(override, "virtualbox")
-
-  end
-
-  # ----------------------------------------------------------------------------
-
-  # Configuration for Parallels VM (Mac OS X)
-  config.vm.provider :parallels do |_, override|
+  config.vm.define :www do |node|
+    node.vm.hostname = "phoebo-www.local"
 
     # Base setup:  Ubuntu Server 14.04 LTS (Trusty Tahr) 64-bit for Parallels
-    override.vm.box = "parallels/ubuntu-14.04"
+    node.vm.box = "parallels/ubuntu-14.04"
 
-    # VM will have 512 MB RAM as default
-    _.memory = 512
+    # Setup provider
+    node.vm.provider "parallels" do |provider|
+      # VM will have 1.5 GB RAM as default
+      provider.memory = 1536
+    end
 
-    # Puppet with passed provider to facter
-    puppet(override, "parallels")
+    # Initial setup (before Puppet kicks in)
+    node.vm.provision :shell, :path => "Scripts/01_update-system.sh"
+    node.vm.provision :shell, :path => "Scripts/02_update-system-ruby.sh"
+    node.vm.provision :shell, :path => "Scripts/03_update-puppet.sh", :args => [ "Puppetfile_www" ]
 
+    # Auto-host
+    node.vm.provision :hostmanager
+
+    # Puppet setup
+    node.vm.provision :puppet do |pp|
+      pp.module_path = "Puppet/modules"
+      pp.manifests_path = "Puppet/manifests"
+      pp.manifest_file  = "init_www.pp"
+      pp.hiera_config_path = "Hiera/www.yaml"
+
+      pp.options = [
+        "--templatedir",
+        "/vagrant/Puppet/templates",
+      ]
+    end
   end
 
 end

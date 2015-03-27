@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: 127.0.0.1
+  username: <%= scope.function_hiera(['phoebo::dbuser']) %>
+  password: <%= scope.function_hiera(['phoebo::dbpassword']) %>
+
+development:
+  <<: *default
+  database: <%= scope.function_hiera(['phoebo::db']) %>_dev
+
+test:
+  <<: *default
+  database: <%= scope.function_hiera(['phoebo::db']) %>_test
+
+production:
+  <<: *default
+  database: <%= scope.function_hiera(['phoebo::db']) %>

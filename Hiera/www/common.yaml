@@ -1,0 +1,8 @@
+---
+phoebo::db: phoebo
+phoebo::dbuser: phoebo
+phoebo::dbpassword: phoebo_secret_11
+
+gitlab::db: gitlab
+gitlab::dbuser: gitlab
+gitlab::dbpassword: gitlab_secret_12

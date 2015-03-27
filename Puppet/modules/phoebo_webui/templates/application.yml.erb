@@ -1,0 +1,20 @@
+defaults: &defaults
+  gitlab_server:
+    url: 'https://gitlab.v3net.cz'
+    app_id: ''
+    app_secret: ''
+
+  singularity:
+    url: 'http://127.0.0.1:7099/singularity'
+
+  redis:
+    host: '127.0.0.1'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

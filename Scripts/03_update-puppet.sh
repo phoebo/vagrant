@@ -8,23 +8,23 @@ LIBRARIAN_DIR="/tmp/librarian-puppet"
 #
 # Note: we need also git-core so that librarian can checkout GIT repositories.
 if [ ! -e /var/puppet-updated ]; then
-	apt-get update || exit 1
-	apt-get --assume-yes install puppet git-core librarian-puppet || exit 1
+	apt-get --assume-yes install git-core || exit 1
+	gem install puppet librarian-puppet
 
 	touch /var/puppet-updated
 fi
 
 # Check for any change in required puppet modules and install them
 # TODO: support for Puppetfile.lock
-if [ -e "$VAGRANT_DIR/Puppetfile" ]; then
+if [ -e "$VAGRANT_DIR/$1" ]; then
 	if [ ! -e "/var/puppetfile.md5" ] || [ ! -d "$LIBRARIAN_DIR" ] || ! `md5sum --status -c /var/puppetfile.md5` ; then
 		echo "Puppetfile changed"
-		md5sum "$VAGRANT_DIR/Puppetfile" > /var/puppetfile.md5
+		md5sum "$VAGRANT_DIR/$1" > /var/puppetfile.md5
 
 		[ ! -d "$LIBRARIAN_DIR" ] && mkdir -p "$LIBRARIAN_DIR"
 
 		[ -e "$LIBRARIAN_DIR/Puppetfile" ] && rm "$LIBRARIAN_DIR/Puppetfile"
-		ln -s "$VAGRANT_DIR/Puppetfile" "$LIBRARIAN_DIR/Puppetfile"
+		ln -s "$VAGRANT_DIR/$1" "$LIBRARIAN_DIR/Puppetfile"
 		cd "$LIBRARIAN_DIR"
 
 		# Please remove GIT_SSL_NO_VERIFY once SpaceSSL certificates are added into

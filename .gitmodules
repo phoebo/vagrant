@@ -1,0 +1,3 @@
+[submodule "Data/Phoebo"]
+	path = Data/Phoebo
+	url = git@gitlab.fit.cvut.cz:phoebo/webui.git
