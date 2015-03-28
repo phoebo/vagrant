@@ -8,7 +8,11 @@
 class { 'bootstrap': }
 class { 'postgresql::server': }
 
-package { 'redis-server':
+package {
+	[
+		'redis-server',
+		'postgresql-server-dev-9.3'
+	]:
 	ensure => present
 }
 
