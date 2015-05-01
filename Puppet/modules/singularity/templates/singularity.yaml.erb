@@ -1,0 +1,44 @@
+server:
+  type: simple
+  applicationContextPath: /singularity
+  connector:
+    type: http
+    port: 7099
+  requestLog:
+    appenders:
+      - type: file
+        currentLogFilename: /var/log/singularity/access.log
+        archivedLogFilenamePattern: /var/log/singularity/access-%d.log.gz
+
+# database:  # omit this entirely if not using MySQL
+#   driverClass: com.mysql.jdbc.Driver
+#   user: [database username]
+#   password: [database password]
+#   url: jdbc:mysql://[database host]:[database port]/[database name]
+
+mesos:
+  master: zk://localhost:2181/mesos
+  defaultCpus: 1
+  defaultMemory: 128
+  frameworkName: Singularity
+  frameworkId: Singularity
+  frameworkFailoverTimeout: 1000000
+
+zookeeper:
+  quorum: localhost:2181
+  zkNamespace: singularity
+  sessionTimeoutMillis: 60000
+  connectTimeoutMillis: 5000
+  retryBaseSleepTimeMilliseconds: 1000
+  retryMaxTries: 3
+
+logging:
+  loggers:
+    "com.hubspot.singularity" : TRACE
+
+enableCorsFilter: true
+sandboxDefaultsToTaskId: false  # enable if using SingularityExecutor
+
+ui:
+  title: Singularity (Phoebo CI - Vagrant)
+  baseUrl: http://singularity.<%= @fqdn %>

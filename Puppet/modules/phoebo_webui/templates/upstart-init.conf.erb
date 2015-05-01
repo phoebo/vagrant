@@ -1,0 +1,17 @@
+description "Phoebo Application Server (Puma)"
+
+respawn
+respawn limit 3 30
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+pre-start script
+  mkdir -p -m 0775 /var/run/phoebo
+  chown vagrant:vagrant /var/run/phoebo
+end script
+
+script
+  cd /vagrant/Data/Phoebo
+  exec sudo -u vagrant bundle exec puma -C config/puma.rb
+end script

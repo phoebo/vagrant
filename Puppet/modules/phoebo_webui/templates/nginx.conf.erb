@@ -1,0 +1,18 @@
+upstream phoebo {
+  server unix:///var/run/phoebo/puma.sock;
+}
+
+server {
+    listen 80;
+    server_name <%= @fqdn %> *.<%= @fqdn %>;
+    location / {
+
+        set $target 'phoebo';
+        set $phoebo_proxy_url 'http://<%= @fqdn %>/proxy_access';
+        access_by_lua_file /vagrant/Data/Phoebo/support/nginx/proxy_access.lua;
+
+        proxy_pass http://$target;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}

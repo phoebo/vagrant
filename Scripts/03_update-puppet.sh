@@ -8,8 +8,20 @@ LIBRARIAN_DIR="/tmp/librarian-puppet"
 #
 # Note: we need also git-core so that librarian can checkout GIT repositories.
 if [ ! -e /var/puppet-updated ]; then
-	apt-get --assume-yes install git-core || exit 1
-	gem install puppet librarian-puppet
+	apt-get --assume-yes install git-core build-essential || exit 1
+
+	# Remove system installation
+	sudo apt-get remove --assume-yes puppet-common
+	sudo apt-get autoremove --assume-yes
+
+	# Install Ruby if not installed
+	if [ ! -e /usr/local/bin/gem ]; then
+		apt-get install --assume-yes ruby ruby-dev || exit 1
+	fi
+
+	# Vagrant is not compatible with 4.x
+	gem install puppet -v 3.7.0 --no-rdoc --no-ri  || exit 1
+	gem install librarian-puppet --no-rdoc --no-ri || exit 1
 
 	touch /var/puppet-updated
 fi

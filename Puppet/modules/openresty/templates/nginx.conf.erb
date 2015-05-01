@@ -1,0 +1,16 @@
+worker_processes  1;
+error_log logs/error.log;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    client_body_temp_path /tmp/openresty_client_body_temp;
+    proxy_temp_path /tmp/openresty_proxy_temp;
+    fastcgi_temp_path /tmp/openresty_fastcgi_temp;
+    uwsgi_temp_path /tmp/openresty_uwsgi_temp;
+    scgi_temp_path /tmp/openresty_scgi_temp;
+
+    include vhosts/*.conf;
+}

@@ -1,0 +1,6 @@
+# We don't want forked environment because of Broker (using threads)
+workers 0
+
+pidfile '/var/run/phoebo/puma.pid'
+state_path '/var/run/phoebo/puma.state'
+bind 'unix:///var/run/phoebo/puma.sock'

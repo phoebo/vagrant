@@ -1,0 +1,9 @@
+#!upstart
+description "Singularity Service"
+env PATH=/usr/local/singularity/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/bin:/usr/bin
+env MESOS_HOME=/usr/local
+env MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+env PORT=7092
+start on stopped rc RUNLEVEL=[2345]
+respawn
+exec java -Xmx512m -Djava.net.preferIPv4Stack=true -jar /usr/local/singularity/bin/SingularityService-0.4.1-shaded.jar server /etc/singularity/singularity.yaml >> /var/log/singularity/singularity.log 2>&1

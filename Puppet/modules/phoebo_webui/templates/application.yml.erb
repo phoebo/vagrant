@@ -1,14 +1,21 @@
 defaults: &defaults
+  url:
+    host: <%= @fqdn %>
+
   gitlab_server:
     url: 'https://gitlab.v3net.cz'
     app_id: ''
     app_secret: ''
 
   singularity:
-    url: 'http://127.0.0.1:7099/singularity'
+    url: 'http://singularity.<%= @fqdn %>'
 
   redis:
     host: '127.0.0.1'
+
+  logspout:
+    webhook:
+      url: 'ws://<%= @ipaddress_eth0 %>:80'
 
 development:
   <<: *defaults
