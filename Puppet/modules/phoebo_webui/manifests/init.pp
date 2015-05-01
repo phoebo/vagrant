@@ -86,6 +86,10 @@ class phoebo_webui (
 		content => template('phoebo_webui/vagrant.rb.erb')
 	}
 
+	nginx::vhost_confd { "01_phoebo":
+		content => template('phoebo_webui/nginx.conf.erb')
+	}
+
 	service { "phoebo":
 		ensure => running,
 		require => [
@@ -93,12 +97,8 @@ class phoebo_webui (
 			File["$base_dir/config/initializers/00_vagrant.rb"],
 			File["$base_dir/config/puma.rb"],
 			File["$base_dir/config/application.yml"],
-			Exec["phoebo-db-migration"]
+			Exec["phoebo-db-migration"],
+			Service["nginx"]
 		]
 	}
-
-	nginx::vhost_confd { "01_phoebo":
-		content => template('phoebo_webui/nginx.conf.erb')
-	}
-
 }

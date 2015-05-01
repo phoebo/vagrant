@@ -82,15 +82,6 @@ class openresty {
 		ensure => present,
 		content => template('openresty/upstart-init.conf')
 	}
-
-	service { 'nginx':
-		ensure => 'running',
-		require => [
-			File["/etc/init/nginx.conf"],
-			File["/etc/nginx/nginx.conf"],
-			Exec["compile-and-install-openresty"]
-		]
-	}
 }
 
 define nginx::vhost_confd(
@@ -103,4 +94,3 @@ define nginx::vhost_confd(
 	}
 }
 
-Nginx::Vhost_confd <| |> ~> Service['nginx']

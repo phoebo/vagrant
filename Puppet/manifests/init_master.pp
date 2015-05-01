@@ -131,7 +131,15 @@ class { 'phoebo_webui':
     Anchor['common::end'],
     Class['openresty'],
     Service["singularity"],
-    Service['nginx'],
     Class['postgresql::server']
+  ]
+}
+
+Nginx::Vhost_confd <| |>
+~>
+service { 'nginx':
+  ensure => 'running',
+  require => [
+    Class['openresty'],
   ]
 }
