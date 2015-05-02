@@ -131,12 +131,14 @@ service { 'mesos-slave':
     File['/etc/mesos-slave/containerizers'],
     File['/etc/mesos-slave/executor_registration_timeout']
   ],
-  ensure => 'running'
+  ensure => 'running',
+  enable => true
 }
 
 service { 'mesos-master':
   require => Package['mesos'],
-  ensure => 'stopped'
+  ensure => 'stopped',
+  enable => false
 }
 
 

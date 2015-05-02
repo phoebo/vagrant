@@ -99,6 +99,7 @@ class phoebo_webui (
 			File["$base_dir/config/application.yml"],
 			Exec["phoebo-db-migration"],
 			Service["nginx"]
-		]
+		],
+		enable => true
 	}
 }

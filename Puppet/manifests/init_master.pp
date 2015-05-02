@@ -112,7 +112,16 @@ file { '/etc/mesos-master/hostname':
 
 service { 'mesos-master':
   require => Package['mesos'],
-  ensure => 'running'
+  ensure => 'running',
+  enable => true
+}
+
+->
+
+service { 'mesos-slave':
+  require => Package['mesos'],
+  ensure => 'stopped',
+  enable => false
 }
 
 ->
