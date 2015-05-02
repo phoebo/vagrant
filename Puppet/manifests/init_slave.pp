@@ -76,12 +76,12 @@ service { 'docker':
 
 exec { 'preload-phoebo-image-builder':
   require => Service['docker'],
-  command => '/usr/bin/docker pull phoebo/logspout:latest'
+  command => '/usr/bin/docker pull phoebo/image-builder:latest'
 }
 
 exec { 'preload-phoebo-logspout':
   require => Service['docker'],
-  command => '/usr/bin/docker pull phoebo/image-builder:latest'
+  command => '/usr/bin/docker pull phoebo/logspout:latest'
 }
 
 # ------------------------------------------------------------------------------
